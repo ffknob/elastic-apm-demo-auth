@@ -23,6 +23,9 @@ const strategy = (
     profile: Profile,
     done: VerifyCallback
 ) => {
+    console.log(accessToken);
+    console.log(profile);
+
     LoggerService.logger.debug(`User profile: ` + profile);
 
     let user: User | undefined = users.find(
