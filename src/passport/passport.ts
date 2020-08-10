@@ -1,6 +1,7 @@
 import passport from 'passport';
 
 import { GoogleStrategy } from './strategies/google';
+import { GithubStrategy } from './strategies/github';
 import { LocalStrategy } from './strategies/local';
 
 import { VerifyCallback } from 'passport-google-oauth20';
@@ -23,6 +24,7 @@ export const init = () => {
         }
     });
 
-    passport.use(LocalStrategy);
     passport.use(GoogleStrategy);
+    passport.use(GithubStrategy);
+    passport.use(LocalStrategy);
 };
