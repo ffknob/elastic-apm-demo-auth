@@ -22,8 +22,8 @@ router.get(
     },
     (req: Request, res: Response, next: NextFunction) => {
         passport.authenticate(req.params.provider, {
-            successRedirect: ,
-            failureRedirect: '/signin'
+            successRedirect: process.env.SIGIN_SUCCESS_REDIRECT_URL,
+            failureRedirect: process.env.SIGIN_FAILURE_REDIRECT_URL
         })(req, res, next);
     }
 );
