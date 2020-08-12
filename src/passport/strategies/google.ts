@@ -29,7 +29,9 @@ const strategy = (
     profile: Profile,
     done: VerifyCallback
 ) => {
-    LoggerService.logger.debug(`User profile id ${profile.id} at ${provider}`);
+    LoggerService.logger.debug(
+        `User profile with id ${profile.id} at ${provider}`
+    );
 
     let user: User | undefined = DataService.findProviderUser(
         profile.id,

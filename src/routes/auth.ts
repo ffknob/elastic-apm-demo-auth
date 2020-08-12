@@ -17,10 +17,6 @@ router.post('/:provider', (req: Request, res: Response, next: NextFunction) => {
 router.get(
     '/:provider/redirect',
     (req: Request, res: Response, next: NextFunction) => {
-        console.log(req);
-        next();
-    },
-    (req: Request, res: Response, next: NextFunction) => {
         passport.authenticate(req.params.provider, {
             successRedirect: process.env.SIGIN_SUCCESS_REDIRECT_URL,
             failureRedirect: process.env.SIGIN_FAILURE_REDIRECT_URL

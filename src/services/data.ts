@@ -11,7 +11,9 @@ export class DataService {
         id: string,
         provider: SignInProvider
     ): User | undefined {
-        return users.find((u: User) => u[provider as string].id === id);
+        return users.find((u: User) =>
+            u[provider as string] ? u[provider as string].id === id : false
+        );
     }
 
     static findLocalUser(email: string, password: string): User | undefined {

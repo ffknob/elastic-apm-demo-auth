@@ -13,6 +13,7 @@ import { DataService } from '../services';
 
 export const init = () => {
     passport.serializeUser<any, any>((user: User, done: VerifyCallback) => {
+        console.log(user);
         done(undefined, user._id);
     });
 
@@ -22,7 +23,7 @@ export const init = () => {
         if (user) {
             done(undefined, user);
         } else {
-            done('XXXXXXXXXXXXXX', null);
+            done(new Error(`User with id ${id} not found.`), null);
         }
     });
 
