@@ -44,14 +44,22 @@ const strategy = (
             ? profile.emails[0].value
             : undefined;
 
+        const image: string | undefined = profile.photos
+            ? profile.photos[0].value
+            : undefined;
+
         user = {
             _id: '1234',
             name: profile.displayName,
             username: profile.username || email,
-            email: email,
+            email,
             token: accessToken,
             tokenExpirationDate: new Date(),
-            image: '/images/user/1234.png'
+            image,
+            google: {
+                id: profile.id,
+                data: { ...profile._json }
+            }
         };
 
         DataService.addUser(user);

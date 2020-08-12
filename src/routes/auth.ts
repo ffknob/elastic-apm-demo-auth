@@ -17,8 +17,12 @@ router.post('/:provider', (req: Request, res: Response, next: NextFunction) => {
 router.get(
     '/:provider/redirect',
     (req: Request, res: Response, next: NextFunction) => {
+        console.log(req);
+        next();
+    },
+    (req: Request, res: Response, next: NextFunction) => {
         passport.authenticate(req.params.provider, {
-            successRedirect: '/simulate',
+            successRedirect: ,
             failureRedirect: '/signin'
         })(req, res, next);
     }
