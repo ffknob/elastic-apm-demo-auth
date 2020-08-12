@@ -9,18 +9,16 @@ const router = express.Router();
 //router.post('/signout', )
 
 router.post('/:provider', (req: Request, res: Response, next: NextFunction) => {
-    passport.authenticate(req.params.provider, { scope: ['profile'] })(
-        req,
-        res,
-        next
-    );
+    passport.authenticate(req.params.provider, {
+        scope: ['profile', 'email']
+    })(req, res, next);
 });
 
-router.post(
+router.get(
     '/:provider/redirect',
     (req: Request, res: Response, next: NextFunction) => {
         passport.authenticate(req.params.provider, {
-            successRedirect: '/',
+            successRedirect: '/simulate',
             failureRedirect: '/signin'
         })(req, res, next);
     }

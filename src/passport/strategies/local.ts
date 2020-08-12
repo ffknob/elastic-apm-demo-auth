@@ -7,9 +7,15 @@ import {
     IVerifyOptions
 } from 'passport-local';
 
-import { User, LoggerService } from '@ffknob/elastic-apm-demo-shared';
+import {
+    User,
+    SignInProvider,
+    LoggerService
+} from '@ffknob/elastic-apm-demo-shared';
 
-import { users } from '../passport';
+import { DataService } from '../../services';
+
+const provider: SignInProvider = 'local';
 
 const strategyOptions: StrategyOptions = {
     usernameField: 'username'
@@ -20,9 +26,7 @@ const strategy: VerifyFunction = (
     password: string,
     done: (error: any, user?: any, options?: IVerifyOptions) => void
 ) => {
-    let user: User | undefined = users.find(
-        (user: User) => user.email && user.email === email
-    );
+    let user: User | undefined = DataService.findLocalUser(email, password);
 
     if (user) {
         if (user.password === '1234') {
@@ -33,7 +37,7 @@ const strategy: VerifyFunction = (
                 email: 'ffknob@gmail.com'
             };
 
-            users.push(user);
+            DataService.addUser(user);
 
             done(undefined, user);
         }

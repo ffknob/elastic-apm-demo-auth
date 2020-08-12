@@ -2,12 +2,14 @@ import passport from 'passport';
 
 import { GoogleStrategy } from './strategies/google';
 import { GithubStrategy } from './strategies/github';
+import { LinkedInStrategy } from './strategies/linkedin';
 import { LocalStrategy } from './strategies/local';
 
 import { VerifyCallback } from 'passport-google-oauth20';
+
 import { User } from '@ffknob/elastic-apm-demo-shared';
 
-export const users: User[] = [];
+import { DataService } from '../services';
 
 export const init = () => {
     passport.serializeUser<any, any>((user: User, done: VerifyCallback) => {
@@ -15,7 +17,7 @@ export const init = () => {
     });
 
     passport.deserializeUser((id: string, done: VerifyCallback) => {
-        const user: User | undefined = users.find((u: User) => u._id === id);
+        const user: User | undefined = DataService.findUserById(id);
 
         if (user) {
             done(undefined, user);
@@ -26,5 +28,6 @@ export const init = () => {
 
     passport.use(GoogleStrategy);
     passport.use(GithubStrategy);
+    passport.use(LinkedInStrategy);
     passport.use(LocalStrategy);
 };

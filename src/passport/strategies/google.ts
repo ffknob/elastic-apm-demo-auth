@@ -7,9 +7,15 @@ import {
     Profile
 } from 'passport-google-oauth20';
 
-import { User, LoggerService } from '@ffknob/elastic-apm-demo-shared';
+import {
+    User,
+    SignInProvider,
+    LoggerService
+} from '@ffknob/elastic-apm-demo-shared';
 
-import { users } from '../passport';
+import { DataService } from '../../services';
+
+const provider: SignInProvider = 'google';
 
 const strategyOptions: StrategyOptions = {
     clientID: process.env.GOOGLE_CLIENT_ID || '',
@@ -26,10 +32,11 @@ const strategy = (
     console.log(accessToken);
     console.log(profile);
 
-    LoggerService.logger.debug(`User profile: ` + profile);
+    LoggerService.logger.debug(`User profile id ${profile.id} at ${provider}`);
 
-    let user: User | undefined = users.find(
-        (user: User) => user.google && user.google.id === profile.id
+    let user: User | undefined = DataService.findProviderUser(
+        profile.id,
+        provider
     );
 
     if (!user) {
@@ -47,7 +54,13 @@ const strategy = (
             image: '/images/user/1234.png'
         };
 
-        users.push(user);
+        DataService.addUser(user);
+
+        LoggerService.logger.debug(
+            `New user registered: ${user._id}, ${profile.displayName}, (${profile.provider})`
+        );
+    } else {
+        LoggerService.logger.debug(`User already registered (${user._id})`);
     }
 
     done(undefined, user);

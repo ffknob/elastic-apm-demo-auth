@@ -5,22 +5,22 @@ import {
     StrategyOptions,
     VerifyCallback,
     Profile
-} from 'passport-github';
+} from 'passport-linkedin-oauth2';
 
 import {
     User,
-    LoggerService,
-    SignInProvider
+    SignInProvider,
+    LoggerService
 } from '@ffknob/elastic-apm-demo-shared';
 
 import { DataService } from '../../services';
 
-const provider: SignInProvider = 'github';
+const provider: SignInProvider = 'linkedin';
 
 const strategyOptions: StrategyOptions = {
-    clientID: process.env.GITHUB_CLIENT_ID || '',
-    clientSecret: process.env.GITHUB_CLIENT_SECRET || '',
-    callbackURL: process.env.GITHUB_CALLBACK_URL || ''
+    clientID: process.env.LINKEDIN_CLIENT_ID || '',
+    clientSecret: process.env.LINKEDIN_CLIENT_SECRET || '',
+    callbackURL: process.env.LINKEDIN_CALLBACK_URL || ''
 };
 
 const strategy = (
@@ -60,4 +60,4 @@ const strategy = (
     done(undefined, user);
 };
 
-export const GithubStrategy = new Strategy(strategyOptions, strategy);
+export const LinkedInStrategy = new Strategy(strategyOptions, strategy);
