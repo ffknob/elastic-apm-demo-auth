@@ -9,6 +9,7 @@ import {
 } from '@ffknob/elastic-apm-demo-shared';
 
 import express, { Request, Response, NextFunction } from 'express';
+import cors from 'cors';
 import session from 'express-session';
 import expressWinston from 'express-winston';
 import cookieParser from 'cookie-parser';
@@ -46,19 +47,7 @@ app.use(
     })
 );
 
-app.use((req: Request, res: Response, next: NextFunction) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader(
-        'Access-Control-Allow-Headers',
-        'Origin, X-Requested-With, Content-Type, Accept'
-    );
-    res.setHeader(
-        'Access-Control-Allow-Methods',
-        'POST, GET, PATCH, DELETE, OPTIONS'
-    );
-    next();
-});
-
+app.use(cors({ origin: '*' }));
 app.use(
     session({
         genid: (req: Request) => uuid.v4(),
