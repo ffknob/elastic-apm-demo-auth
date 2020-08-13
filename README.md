@@ -11,6 +11,8 @@ ELASTIC_APM_SERVER_URL=https://apm-server:8200
 ELASTIC_APM_SECRET_TOKEN=...
 PORT=5002
 
+SESSION_SECRET=...
+
 SIGIN_SUCCESS_REDIRECT_URL=http://localhost:3000/signin/success?noWrapper
 SIGIN_FAILURE_REDIRECT_URL=http://localhost:3000/signin/failure?noWrapper
 

@@ -9,11 +9,13 @@ import {
 } from '@ffknob/elastic-apm-demo-shared';
 
 import express, { Request, Response, NextFunction } from 'express';
+import session from 'express-session';
+import expressWinston from 'express-winston';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import winston from 'winston';
-import expressWinston from 'express-winston';
 
+import * as uuid from 'uuid';
 import passport from 'passport';
 
 import { passportConfig } from './passport';
@@ -57,6 +59,16 @@ app.use((req: Request, res: Response, next: NextFunction) => {
     next();
 });
 
+app.use(
+    session({
+        genid: (req: Request) => uuid.v4(),
+        //store: new MongoStore
+        //store: new RedisStore
+        secret: process.env.SESSION_SECRET || 'secret',
+        resave: false,
+        saveUninitialized: true
+    })
+);
 app.use(passport.initialize());
 app.use(passport.session());
 passportConfig.init();
